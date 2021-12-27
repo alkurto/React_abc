@@ -43,6 +43,7 @@ class App extends React.Component {
       },
     ],
     visible: true,
+    appTitle: "Cars application",
   };
 
   handleClick(name) {
@@ -71,7 +72,10 @@ class App extends React.Component {
     });
   }
   /*---end----------------------*/
-
+  titleChangeHandler(title) {
+    if (title.trim() === "") return;
+    this.setState({ appTitle: title });
+  }
   render() {
     /*---переключение hidden у контейнера -------------------------------------*/
     const classes = ["list"];
@@ -87,9 +91,23 @@ class App extends React.Component {
     /*---end--------------------------------- */
 
     /*----2-й способ подключения обработчика. Динамический класс. ------------------------- */
+    const style = {
+      marginRight: 20,
+    };
     return (
       <div className="app">
-        <button onClick={() => this.toggleHandler()}>Toggle</button>
+        <h1>{this.state.appTitle}</h1>
+        <button onClick={() => this.toggleHandler()} style={style}>
+          Toggle
+        </button>
+        <input
+          type="text"
+          placeholder="change title"
+          onChange={(event) => {
+            this.titleChangeHandler(event.target.value);
+          }}
+          value={this.state.appTitle}
+        />
         <hr />
         <div className={classes.join(" ")}>{this.renderCars()}</div>
       </div>
